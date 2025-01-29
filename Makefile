@@ -15,3 +15,9 @@ uploadfs:
 
 update:
 	platformio -f  update
+
+debug:
+	platformio -f  run -v
+
+monitor:
+	platformio run -t upload -t monitor
