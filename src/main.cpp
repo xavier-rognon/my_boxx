@@ -1,22 +1,15 @@
 #include <Arduino.h>
+#include <cstdio>
 
-#include "USBAPI.h"
-#include "inputs/Switch.hh"
+#include "Gamecube/Gamecube.hh"
 
-boxx::Switch *mySwitch;
+boxx::Gamecube *gamecube;
 
 void setup() {
-    Serial.begin(9600); // Start serial communication
-    delay(1000); // Allow time for stabilization
-
-    mySwitch = new boxx::Switch(A3, 0.9);
+    gamecube = new boxx::Gamecube(7);
+    Serial.begin(9600);
 }
 
 void loop() {
-    mySwitch->update();
-    if (mySwitch->isPressed()) {
-        Serial.println("Pressed");
-    } else {
-        Serial.println("Not pressed");
-    }
+    gamecube->update();
 }

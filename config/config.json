@@ -1,0 +1,23 @@
+{
+    "keys": {
+        "ANALOG_UP": 1,
+        "ANALOG_DOWN": 2,
+        "ANALOG_LEFT": 3,
+        "ANALOG_RIGHT": 4,
+        "MOD_X": 5,
+        "MOD_Y": 6,
+        "A": 7,
+        "B": 8,
+        "X": 9,
+        "Y": 10,
+        "L": 11,
+        "R": 12,
+        "Z": 13,
+        "C_UP": 14,
+        "C_DOWN": 15,
+        "C_LEFT": 16,
+        "C_RIGHT": 17,
+        "LIGHT_SHIELD": 18,
+        "START": 20
+    },
+}

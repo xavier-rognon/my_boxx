@@ -12,25 +12,20 @@
 #include <array>
 #include <cstdint>
 
-#define AVG 10
-
 namespace boxx {
     class Switch {
     public:
-        Switch(uint8_t pin, float actuation);
+        Switch(const uint8_t &pin = 0, const float &actuation = 0.9);
         ~Switch();
 
         void update();
+        void update(const uint16_t &value);
 
         bool isPressed();
     private:
-        uint16_t getSmoothedValue();
-
         uint8_t _pin;
         float _actuation;
-        uint16_t _baseline;
-        std::array<int, AVG> _samples;
         bool _isPressed;
-        uint8_t _index;
+        std::array<uint16_t, 2> _extremums; // INFO: 0 is min, 1 is max
     };
 }

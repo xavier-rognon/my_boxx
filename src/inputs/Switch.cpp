@@ -8,11 +8,10 @@
 #include "Switch.hh"
 
 namespace boxx {
-    Switch::Switch(uint8_t pin, float actuation):
-        _pin(pin), _actuation(actuation), _baseline(0), _isPressed(false), _index(0)
+    Switch::Switch(const uint8_t &pin, const float &actuation):
+        _pin(pin), _actuation(actuation), _isPressed(false), _extremums({160, 400})
     {
         pinMode(_pin, INPUT);
-        _baseline = analogRead(_pin);
     }
 
     Switch::~Switch()
@@ -20,27 +19,28 @@ namespace boxx {
 
     void Switch::update()
     {
-        _samples[_index] = analogRead(_pin);
-        _index = (_index + 1) % AVG;
-        int smoothedValue = getSmoothedValue();
+        int value = analogRead(_pin);
 
-        if (!_isPressed && smoothedValue < _baseline * _actuation)
-            _isPressed = true;
-        if (_isPressed && smoothedValue > _baseline * _actuation)
-            _isPressed = false;
+        if (value < _extremums[0])
+            _extremums[0] = value;
+        if (value > _extremums[1])
+            _extremums[1] = value;
+        _isPressed = value - _extremums[0] < _actuation *
+                     (_extremums[1] - _extremums[0]);
+    }
+
+    void Switch::update(const uint16_t &value)
+    {
+        if (value < _extremums[0])
+            _extremums[0] = value;
+        if (value > _extremums[1])
+            _extremums[1] = value;
+        _isPressed = value - _extremums[0] < _actuation *
+                     (_extremums[1] - _extremums[0]);
     }
 
     bool Switch::isPressed()
     {
         return _isPressed;
-    }
-
-    uint16_t Switch::getSmoothedValue()
-    {
-        uint16_t sum = 0;
-        for (int i = 0; i < AVG; i++) {
-            sum += _samples[i];
-        }
-        return sum / AVG;
     }
 }

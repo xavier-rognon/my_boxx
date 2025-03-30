@@ -30,15 +30,3 @@
 #define C_RIGHT 16
 #define LIGHT_SHIELD 17
 #define START 19
-
-namespace boxx {
-    class Input {
-    public:
-        Input();
-        ~Input();
-        void checkIfInputArePressed(int *analogValues);
-        bool *getInputs() const;
-    private:
-        bool *_inputs;
-    };
-}
